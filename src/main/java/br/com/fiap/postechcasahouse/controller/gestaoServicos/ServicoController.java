@@ -1,4 +1,4 @@
-package br.com.fiap.postechcasahouse.controller.gestaoQuartos.gestaoServicos;
+package br.com.fiap.postechcasahouse.controller.gestaoServicos;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
 import br.com.fiap.postechcasahouse.service.gestaoServicos.ServicoService;
