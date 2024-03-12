@@ -26,8 +26,7 @@ public class LocalidadeController {
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<LocalidadeDTO> addresses = localidadeService.findAll(pageRequest);
-        return ResponseEntity.ok().body(addresses);
+        return ResponseEntity.ok().body(localidadeService.findAll(pageRequest));
     }
 
 //    @GetMapping(value = "/find")
@@ -56,4 +55,5 @@ public class LocalidadeController {
         localidadeService.delete(id);
         return ResponseEntity.ok().body("Localidade removida com sucesso!");
     }
+
 }
