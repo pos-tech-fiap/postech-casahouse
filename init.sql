@@ -1,13 +1,13 @@
 -- Criar database
-CREATE DATABASE IF NOT EXISTS casahouse;
+-- CREATE DATABASE casahouse;
 
 -- Conectar ao database
 \c casahouse;
 
-CREATE TABLE IF NOT EXISTS tb_servico(
+CREATE TABLE tb_servico(
     id UUID primary key,
     nome VARCHAR(255) not null,
-    valor double not null
+    valor double precision not null
 );
 
 CREATE TABLE tb_localidade (
