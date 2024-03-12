@@ -1,8 +1,8 @@
-package br.com.fiap.postechcasahouse.services.servicos;
+package br.com.fiap.postechcasahouse.service.gestaoServicos;
 
-import br.com.fiap.postechcasahouse.dtos.servicos.ServicoDTO;
-import br.com.fiap.postechcasahouse.models.servicos.Servico;
-import br.com.fiap.postechcasahouse.repositories.servicos.ServicoRepository;
+import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
+import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
+import br.com.fiap.postechcasahouse.repository.gestaoServicos.ServicoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package br.com.fiap.postechcasahouse.controllers.servicos;
+package br.com.fiap.postechcasahouse.controller.gestaoQuartos.gestaoServicos;
 
-import br.com.fiap.postechcasahouse.dtos.servicos.ServicoDTO;
-import br.com.fiap.postechcasahouse.services.servicos.ServicoService;
+import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
+import br.com.fiap.postechcasahouse.service.gestaoServicos.ServicoService;
 
 import jakarta.validation.Valid;
 

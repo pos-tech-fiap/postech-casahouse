@@ -1,4 +1,4 @@
-package br.com.fiap.postechcasahouse.models.servicos;
+package br.com.fiap.postechcasahouse.entity.gestaoServicos;
 
 import jakarta.persistence.*;
 

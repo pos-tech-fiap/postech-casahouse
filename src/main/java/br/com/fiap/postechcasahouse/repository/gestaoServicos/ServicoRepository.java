@@ -1,6 +1,6 @@
-package br.com.fiap.postechcasahouse.repositories.servicos;
+package br.com.fiap.postechcasahouse.repository.gestaoServicos;
 
-import br.com.fiap.postechcasahouse.models.servicos.Servico;
+import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

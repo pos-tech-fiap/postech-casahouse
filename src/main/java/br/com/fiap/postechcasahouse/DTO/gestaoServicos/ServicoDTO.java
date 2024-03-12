@@ -1,8 +1,8 @@
-package br.com.fiap.postechcasahouse.dtos.servicos;
+package br.com.fiap.postechcasahouse.DTO.gestaoServicos;
 
 import java.util.UUID;
 
-import br.com.fiap.postechcasahouse.models.servicos.Servico;
+import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import jakarta.validation.constraints.NotBlank;
 
 
