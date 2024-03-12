@@ -4,6 +4,8 @@ import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.LocalidadeDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Localidade;
 import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ILocalidadeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,33 +18,50 @@ import java.util.*;
 public class LocalidadeService {
     @Autowired
     private ILocalidadeRepository localidadeRepository;
+    private final Logger logger = LoggerFactory.getLogger(LocalidadeService.class);
+
 
     @Transactional(readOnly = true)
     public Page<LocalidadeDTO> findAll(PageRequest pageRequest) {
-        Page<Localidade> localidades = localidadeRepository.findAll(pageRequest);
-        return localidades.map(LocalidadeDTO::new);
+        try {
+            Page<Localidade> localidades = localidadeRepository.findAll(pageRequest);
+            logger.info("Localidades encontradas: {}", localidades.getTotalElements());
+            return localidades.map(LocalidadeDTO::new);
+        }catch (RuntimeException e){
+            logger.error("Falha ao buscar localidades : {}", e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional(readOnly = true)
     public LocalidadeDTO findById(UUID id) {
-        var localidades = localidadeRepository.findById(id).orElseThrow(() -> new RuntimeException("Localidade não encontrada"));
-        return new LocalidadeDTO(localidades);
+            var localidades = localidadeRepository.findById(id).orElseThrow(() -> new RuntimeException("Localidade não encontrada"));
+            logger.info("Localidades encontradas: {}", localidades);
+            return new LocalidadeDTO(localidades);
     }
 
     @Transactional
     public LocalidadeDTO save(LocalidadeDTO personDTO) {
-        Localidade localidade = new Localidade();
-        mapperDtoToEntity(personDTO, localidade);
-        return new LocalidadeDTO(localidadeRepository.save(localidade));
+        try {
+            Localidade localidade = new Localidade();
+            mapperDtoToEntity(personDTO, localidade);
+            logger.info("Localidades criadas: {}", localidade);
+            return new LocalidadeDTO(localidadeRepository.save(localidade));
+        } catch (Exception e) {
+            logger.error("Falha ao criar localidades : {}", e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional
     public LocalidadeDTO update(UUID id, LocalidadeDTO LocalidadeDTO) {
         try {
-            Localidade Localidade = localidadeRepository.getOne(id);
-            mapperDtoToEntity(LocalidadeDTO, Localidade);
-            return new LocalidadeDTO(localidadeRepository.save(Localidade));
+            Localidade localidade = localidadeRepository.getOne(id);
+            mapperDtoToEntity(LocalidadeDTO, localidade);
+            logger.info("Localidades atualizada com sucesso: {}", localidade);
+            return new LocalidadeDTO(localidadeRepository.save(localidade));
         } catch (NoSuchElementException e) {
+            logger.error("Falha ao atualizar localidades : {}", e);
             throw new RuntimeException("Localidade não encontrada, id: " + id);
         }
     }
@@ -50,31 +69,13 @@ public class LocalidadeService {
     public void delete(UUID id) {
         try {
             localidadeRepository.deleteById(id);
+            logger.info("Localidades removida com sucesso: {}");
+
         } catch (NoSuchElementException e) {
+            logger.error("Falha ao  remover localidades: {}",e);
             throw new RuntimeException("Localidade não encontrada, id: " + id);
         }
     }
-
-//    @Transactional(readOnly = true)
-//    public List<LocalidadeDTO> find(String cep, String rua, String cidade, String estado) {
-//        List<Localidade> localidades = new ArrayList<>();
-//        if (cep != null) {
-//            localidades.addAll(localidadeRepository.findByCEP(cep));
-//        }
-//        if (rua != null) {
-//            localidades.addAll(localidadeRepository.findByRua(rua));
-//        }
-//
-//        if (cidade != null) {
-//            localidades.addAll(localidadeRepository.findByCidade(cidade));
-//        }
-//
-//        if (estado != null) {
-//            localidades.addAll(localidadeRepository.findByEstado(estado));
-//        }
-//
-//        return localidades.stream().map(person -> new LocalidadeDTO((Localidade) localidades)).collect(Collectors.toList());
-//    }
 
     private void mapperDtoToEntity(LocalidadeDTO dto, Localidade localidade) {
         localidade.setNome(dto.getNome());
