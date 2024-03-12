@@ -1,6 +1,5 @@
 package br.com.fiap.postechcasahouse.controller.gestaoQuartos.gestaoServicos;
 
-import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.LocalidadeDTO;
 import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
 import br.com.fiap.postechcasahouse.service.gestaoServicos.ServicoService;
 
@@ -12,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/servicos")
@@ -35,4 +36,8 @@ public class ServicoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoService.save(servicoDTO));
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ServicoDTO> update(@PathVariable UUID id, @RequestBody @Valid ServicoDTO servicoDTO) {
+        return ResponseEntity.ok().body(servicoService.update(id, servicoDTO));
+    }
 }
