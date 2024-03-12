@@ -42,6 +42,14 @@ public class ServicoService {
         }
     }
 
+    public void delete(UUID id) {
+        try {
+            servicoRepository.deleteById(id);
+        } catch (NoSuchElementException e) {
+            throw new RuntimeException("Serviço não encontrado, id: " + id);
+        }
+    }
+
     private void mapperDtoToEntity(ServicoDTO dto, Servico servico) {
         servico.setNome(dto.getNome());
         servico.setValor(dto.getValor());

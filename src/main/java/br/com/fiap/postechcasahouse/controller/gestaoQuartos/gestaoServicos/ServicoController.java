@@ -40,4 +40,10 @@ public class ServicoController {
     public ResponseEntity<ServicoDTO> update(@PathVariable UUID id, @RequestBody @Valid ServicoDTO servicoDTO) {
         return ResponseEntity.ok().body(servicoService.update(id, servicoDTO));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        servicoService.delete(id);
+        return ResponseEntity.ok().body("Serviço removido com sucesso!");
+    }
 }
