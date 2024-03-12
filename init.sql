@@ -10,6 +10,14 @@ CREATE TABLE tb_servico(
     valor double precision not null
 );
 
+INSERT INTO tb_servico (id, nome, valor)
+VALUES
+    ('21f3dc7c-3b24-4c97-9314-7e61a2bc8941', 'Café da Manhã', 65.00),
+    ('b9fc9628-5d5d-4e17-81e5-08f36bc474b2', 'Almoço', 65.00),
+    ('21f3dc7c-3b24-4c97-9314-7e61a2bc8943', 'Jantar', 85.00),
+    ('b9fc9628-5d5d-4e17-81e5-08f36bc474b4', 'Massagem Completa', 250.00),
+    ('b9fc9628-5d5d-4e17-81e5-08f36bc474b5', 'Manicure', 85.00);
+
 CREATE TABLE tb_localidade (
     id UUID PRIMARY KEY,
     nome VARCHAR(255),
