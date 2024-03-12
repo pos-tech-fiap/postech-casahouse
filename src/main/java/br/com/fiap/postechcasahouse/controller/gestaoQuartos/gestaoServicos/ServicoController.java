@@ -27,8 +27,8 @@ public class ServicoController {
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<ServicoDTO> addresses = servicoService.findAll(pageRequest);
-        return ResponseEntity.ok().body(addresses);
+        Page<ServicoDTO> servicoDTOPage = servicoService.findAll(pageRequest);
+        return ResponseEntity.ok().body(servicoDTOPage);
     }
 
     @PostMapping
