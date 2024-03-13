@@ -11,10 +11,10 @@ public class ServicoDTO {
     private UUID id;
 
     @NotBlank
-    private String nome;
+    private final String nome;
 
     @NotBlank
-    private Double valor;
+    private final Double valor;
 
     public ServicoDTO(Servico servico) {
         this.id = servico.getId();
