@@ -31,6 +31,11 @@ public class ServicoController {
         return ResponseEntity.ok().body(servicoDTOPage);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ServicoDTO> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(servicoService.findById(id));
+    }
+
     @PostMapping
     public ResponseEntity<ServicoDTO> save(@RequestBody @Valid ServicoDTO servicoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoService.save(servicoDTO));
