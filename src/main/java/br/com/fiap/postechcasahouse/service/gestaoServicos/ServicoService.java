@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class ServicoService {
 
     @Autowired
