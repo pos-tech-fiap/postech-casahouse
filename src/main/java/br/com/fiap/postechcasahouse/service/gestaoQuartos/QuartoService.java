@@ -80,7 +80,7 @@ public class QuartoService {
     private void mapperDtoToEntity(QuartoDTO dto, Quarto quarto) {
         quarto.setNome(dto.getNome());
         quarto.setPredioId(dto.getPredioId());
-        quarto.getTipoQuartoId();
+        quarto.setTipoQuartoId(dto.getTipoQuartoId());
     }
 
 }

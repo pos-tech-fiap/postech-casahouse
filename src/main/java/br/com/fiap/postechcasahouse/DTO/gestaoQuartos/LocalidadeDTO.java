@@ -32,6 +32,7 @@ public class LocalidadeDTO {
     }
 
     public LocalidadeDTO(Localidade localidade) {
+        this.id = localidade.getId();
         this.nome = localidade.getNome();
         this.rua = localidade.getRua();
         this.cep = localidade.getCep();
