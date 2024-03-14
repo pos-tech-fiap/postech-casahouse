@@ -33,7 +33,8 @@ public class ServicoController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ServicoDTO> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok().body(servicoService.findById(id));
+        var servico = servicoService.findById(id);
+        return ResponseEntity.ok(servico);
     }
 
     @PostMapping

@@ -27,6 +27,10 @@ public class ServicoDTO {
         this.valor = valor;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
