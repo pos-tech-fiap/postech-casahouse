@@ -1,68 +1,115 @@
-package br.com.fiap.postechcasahouse.service.gestaoQuartos;
-
-
-import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ILocalidadeRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
-public class LocalidadeServiceTest {
-    @Mock
-    private ILocalidadeRepository localidadeRepository;
-
-    @InjectMocks
-    private LocalidadeService localidadeService;
-
-    @BeforeEach
-    void setUp() {
-        // Configurações de inicialização, se necessário
-    }
-
+//package br.com.fiap.postechcasahouse.service.gestaoQuartos;
+//
+//
+//import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.LocalidadeDTO;
+//import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
+//import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Localidade;
+//import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ILocalidadeRepository;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.MockitoAnnotations;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageImpl;
+//import org.springframework.data.domain.PageRequest;
+//
+//import java.util.Collections;
+//import java.util.Optional;
+//import java.util.UUID;
+//
+//import static org.hamcrest.core.IsInstanceOf.any;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.mockito.Mockito.*;
+//
+//public class LocalidadeServiceTest {
+//
+//    @Mock
+//    private ILocalidadeRepository localidadeRepository;
+//
+//    @InjectMocks
+//    private LocalidadeService localidadeService;
+//
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//    }
+//
 //    @Test
 //    void testFindAll() {
-//        // Mocking
+//        // Given
 //        PageRequest pageRequest = PageRequest.of(0, 10);
-//        List<Localidade> localidadeList = criarLocalidades(10);
-//        Page<Localidade> page = new PageImpl<>(localidadeList);
-//        when(localidadeRepository.findAll(pageRequest)).thenReturn(page);
+//        Localidade localidade = new Localidade();
+//        Page<Localidade> localidadesPage = new PageImpl<>(Collections.singletonList(localidade));
 //
-//        // Execution
+//        when(localidadeRepository.findAll(pageRequest)).thenReturn(localidadesPage);
+//
+//        // When
 //        Page<LocalidadeDTO> result = localidadeService.findAll(pageRequest);
 //
-//        // Verification
-//        assertEquals(localidadeList.size(), result.getTotalElements());
-//        assertEquals(localidadeList.size(), result.getContent().size());
-//        assertEquals(localidadeList.get(0).getNome(), result.getContent().get(0).getNome());
-//        verify(localidadeRepository, times(1)).findAll(pageRequest);
+//        // Then
+//        assertEquals(1, result.getTotalElements());
 //    }
 //
 //    @Test
 //    void testFindById() {
-//        // Mocking
+//        // Given
 //        UUID id = UUID.randomUUID();
 //        Localidade localidade = new Localidade();
+//
 //        when(localidadeRepository.findById(id)).thenReturn(Optional.of(localidade));
 //
-//        // Execution
+//        // When
 //        LocalidadeDTO result = localidadeService.findById(id);
 //
-//        // Verification
-//        assertNotNull(result);
-//        assertEquals(localidade.getId(), result.getId());
-//        // Adicione mais verificações conforme necessário
+//        // Then
+//        assertEquals(id, result.getId());
 //    }
-
-}
+//
+//    @Test
+//    void testSave() {
+//        // Given
+//        UUID id = UUID.randomUUID();
+//        Amenidades amenidades = Amenidades.AREA_KIDS_BIBLIOTECA;
+//        LocalidadeDTO localidadeDTO = new LocalidadeDTO( id, "Localidade 1",  amenidades,"Rua A","12345-678","Cidade A", "Estado A");
+//        Localidade localidade = new Localidade();
+//
+//        when(localidadeRepository.save(localidadeDTO)).thenReturn(localidadeDTO);
+//
+//        // When
+//        LocalidadeDTO result = localidadeService.save(localidadeDTO);
+//
+//        // Then
+//        assertEquals(localidade.getId(), result.getId());
+//    }
+//
+//    @Test
+//    void testUpdate() {
+//        // Given
+//        UUID id = UUID.randomUUID();
+//        LocalidadeDTO localidadeDTO = new LocalidadeDTO();
+//        Localidade localidade = new Localidade();
+//        localidade.setId(id);
+//
+//        when(localidadeRepository.getOne(id)).thenReturn(localidade);
+//        when(localidadeRepository.save(any(Localidade.class))).thenReturn(localidade);
+//
+//        // When
+//        LocalidadeDTO result = localidadeService.update(id, localidadeDTO);
+//
+//        // Then
+//        assertEquals(id, result.getId());
+//    }
+//
+//    @Test
+//    void testDelete() {
+//        // Given
+//        UUID id = UUID.randomUUID();
+//
+//        // When
+//        localidadeService.delete(id);
+//
+//        // Then
+//        verify(localidadeRepository, times(1)).deleteById(id);
+//    }
+//}
