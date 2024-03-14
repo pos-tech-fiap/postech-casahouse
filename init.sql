@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS tb_predio (
     localidade_id UUID,
     FOREIGN KEY (localidade_id) REFERENCES tb_localidade(id)
 );
+
 CREATE TABLE IF NOT EXISTS tb_quarto (
     id UUID PRIMARY KEY,
     nome VARCHAR(255),
@@ -51,16 +52,30 @@ CREATE TABLE IF NOT EXISTS tb_quarto (
     tipo_quarto_id UUID
 );
 
+INSERT INTO tb_quarto (id, nome, predio_id, tipo_quarto_id) VALUES
+    ('627a32e3-7680-4854-8c25-6dd96b5db113','Quarto 101', 'f47ac10b58cc4372a5670e02b2c3d479', 'f47ac10b58cc4372a5670e02b2c3d480');
+
 CREATE TABLE IF NOT EXISTS tb_reserva (
     id UUID PRIMARY KEY,
     id_cliente UUID NOT NULL,
     data_entrada DATE NOT NULL,
-    data_saida DATE NOT NULL,
+    data_saida DATE,
     quantidade_pessoas INTEGER NOT NULL,
-    quartos UUID[],
-    itens TEXT[],
-    CONSTRAINT fk_quarto FOREIGN KEY (quartos) REFERENCES tb_quarto(id)
+    valor_total NUMERIC(7, 2),
+    itens TEXT[]
 );
+
+INSERT INTO  tb_reserva (id, id_cliente, data_entrada, data_saida, quantidade_pessoas, valor_total) VALUES
+    ('6c5a64da-9b6f-431d-b4aa-b2e633a5d633', '6b14cc27-9ea3-4671-b515-1352231830aa','2024-04-01', '2024-04-02', 2, 220.00);
+
+CREATE TABLE IF NOT EXISTS tb_reserva_quarto(
+    reserva_id UUID,
+    quarto_id UUID,
+    foreign key(reserva_id) references tb_reserva(id) on delete cascade,
+    foreign key(quarto_id) references tb_quarto(id) on delete cascade
+);
+
+INSERT INTO tb_reserva_quarto (reserva_id, quarto_id) VALUES ('6c5a64da-9b6f-431d-b4aa-b2e633a5d633', '627a32e3-7680-4854-8c25-6dd96b5db113');
 
 CREATE TABLE IF NOT EXISTS tb_reserva_servico(
     reserva_id UUID not null,
@@ -69,6 +84,8 @@ CREATE TABLE IF NOT EXISTS tb_reserva_servico(
     foreign key(reserva_id) references tb_reserva(id) on delete cascade,
     foreign key(servico_id) references tb_servico(id) on delete cascade
 );
+
+INSERT INTO tb_reserva_servico (reserva_id, servico_id) VALUES ('6c5a64da-9b6f-431d-b4aa-b2e633a5d633', '21f3dc7c-3b24-4c97-9314-7e61a2bc8941');
 
 --CONSTRAINT fk_quarto FOREIGN KEY (quartos) REFERENCES tb_quarto(id)
 --INSERT INTO tb_localidade (id, nome, amenidades, rua, cep, cidade, estado)

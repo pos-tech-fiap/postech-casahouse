@@ -20,9 +20,10 @@ public class Reserva {
     private Integer quantidadePessoas;
     private Double valorTotal;
 
-    @OneToMany
-    @JoinColumn(name = "quarto_id")
-    private Set<Quarto> quartos = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "tb_reserva_quarto", joinColumns = @JoinColumn(name = "reserva_id"))
+    @Column(name = "quarto_id")
+    private Set<UUID> quartos = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "tb_reserva_servico",
@@ -37,7 +38,7 @@ public class Reserva {
     }
 
     public Reserva(UUID id, UUID idCliente, LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer quantidadePessoas,
-                   Double valorTotal, Set<Quarto> quartos, List<Servico> servicos, List<String> itens) {
+                   Double valorTotal, Set<UUID> quartos, List<Servico> servicos, List<String> itens) {
         this.id = id;
         this.idCliente = idCliente;
         this.dataEntrada = dataEntrada;
@@ -97,11 +98,11 @@ public class Reserva {
         this.valorTotal = valorTotal;
     }
 
-    public Set<Quarto> getQuartos() {
+    public Set<UUID> getQuartos() {
         return quartos;
     }
 
-    public void setQuartos(Set<Quarto> quartos) {
+    public void setQuartos(Set<UUID> quartos) {
         this.quartos = quartos;
     }
 

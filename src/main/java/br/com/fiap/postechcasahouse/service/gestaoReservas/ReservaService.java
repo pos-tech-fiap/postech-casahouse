@@ -1,9 +1,7 @@
 package br.com.fiap.postechcasahouse.service.gestaoReservas;
 
 
-import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.QuartoDTO;
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
-import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservaService {
@@ -35,14 +34,14 @@ public class ReservaService {
     public Page<ReservaDTO> findAll(PageRequest pageRequest) {
         Page<Reserva> reservas = reservaRepository.findAll(pageRequest);
 
-        return reservas.map(ReservaDTO::new);
+        return reservas.map(reserva -> new ReservaDTO(reserva, reserva.getQuartos(), reserva.getServicos().stream().map(Servico::getId).collect(Collectors.toList())));
     }
 
     @Transactional(readOnly = true)
     public ReservaDTO findById(UUID id) {
         var reserva = reservaRepository.findById(id).orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
 
-        return new ReservaDTO(reserva);
+        return new ReservaDTO(reserva, reserva.getQuartos(), reserva.getServicos().stream().map(Servico::getId).collect(Collectors.toList()));
     }
 
     @Transactional
@@ -52,9 +51,9 @@ public class ReservaService {
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
 
-            return new ReservaDTO(reservaSaved, reservaSaved.getQuartos(), reservaSaved.getServicos());
+            return new ReservaDTO(reservaSaved, reservaSaved.getQuartos(), reservaSaved.getServicos().stream().map(Servico::getId).collect(Collectors.toList()));
         } catch (Exception e) {
-            throw new RuntimeException("Falha ao criar reserva" + e);
+            throw new RuntimeException("Falha ao criar reserva: " + e);
         }
     }
 
@@ -65,7 +64,7 @@ public class ReservaService {
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
 
-            return new ReservaDTO(reservaSaved, reservaSaved.getQuartos(), reservaSaved.getServicos());
+            return new ReservaDTO(reservaSaved, reservaSaved.getQuartos(), reservaSaved.getServicos().stream().map(Servico::getId).collect(Collectors.toList()));
         } catch (NoSuchElementException e) {
             throw new RuntimeException("Reserva não encontrada, id: " + id);
         }
@@ -86,13 +85,13 @@ public class ReservaService {
         entity.setQuantidadePessoas(dto.getQuantidadePessoas());
         entity.setValorTotal(dto.getValorTotal());
 
-        for (QuartoDTO quartoDTO : dto.getQuartos()) {
-            Quarto quarto = quartoRepository.getOne(quartoDTO.getId());
-            entity.getQuartos().add(quarto);
+        for (UUID quartoId : dto.getQuartos()) {
+            Quarto quarto = quartoRepository.getOne(quartoId);
+            entity.getQuartos().add(quarto.getId());
         }
 
-        for (ServicoDTO servicoDTO : dto.getServicos()) {
-            Servico servico = servicoRepository.getOne(servicoDTO.getId());
+        for (UUID servicoId : dto.getServicos()) {
+            Servico servico = servicoRepository.getOne(servicoId);
             entity.getServicos().add(servico);
         }
     }

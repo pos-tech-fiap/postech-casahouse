@@ -45,4 +45,12 @@ public class Servico {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
+    public Set<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(Set<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 }

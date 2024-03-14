@@ -1,44 +1,37 @@
 package br.com.fiap.postechcasahouse.DTO.gestaoReservas;
 
-import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.QuartoDTO;
-import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ServicoDTO;
-import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
-import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ReservaDTO {
 
     private UUID id;
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotNull(message = "Campo obrigatório")
     private UUID idCliente;
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotNull(message = "Campo obrigatório")
     @FutureOrPresent(message = "A data não pode estar no passado")
     private LocalDateTime dataEntrada;
 
     @FutureOrPresent(message = "A data não pode estar no passado")
     private LocalDateTime dataSaida;
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotNull(message = "Campo obrigatório")
     private Integer quantidadePessoas;
 
     @Positive(message = "Preço dever ser um valor positivo")
     private Double valorTotal;
 
-    @NotBlank(message = "Campo obrigatório")
-    private List<QuartoDTO> quartos = new ArrayList<>();
+    @NotNull(message = "Campo obrigatório")
+    private Set<UUID> quartos = new HashSet<>();
 
-    private List<ServicoDTO> servicos = new ArrayList<>();
+    private List<UUID> servicos = new ArrayList<>();
 
     private List<String> itens = new ArrayList<>();
 
@@ -65,10 +58,10 @@ public class ReservaDTO {
         this.valorTotal = reserva.getValorTotal();
     }
 
-    public ReservaDTO(Reserva reserva, Set<Quarto> quartos, List<Servico> servicos) {
+    public ReservaDTO(Reserva reserva, Set<UUID> quartosIds, List<UUID> servicosIds) {
         this(reserva);
-        quartos.forEach(quarto -> this.quartos.add(new QuartoDTO(quarto)));
-        servicos.forEach(servico -> this.servicos.add(new ServicoDTO(servico)));
+        this.quartos.addAll(quartosIds);
+        this.servicos.addAll(servicosIds);
     }
 
     public UUID getId() {
@@ -119,19 +112,19 @@ public class ReservaDTO {
         this.valorTotal = valorTotal;
     }
 
-    public List<QuartoDTO> getQuartos() {
+    public Set<UUID> getQuartos() {
         return quartos;
     }
 
-    public void setQuartos(List<QuartoDTO> quartos) {
+    public void setQuartos(Set<UUID> quartos) {
         this.quartos = quartos;
     }
 
-    public List<ServicoDTO> getServicos() {
+    public List<UUID> getServicos() {
         return servicos;
     }
 
-    public void setServicos(List<ServicoDTO> servicos) {
+    public void setServicos(List<UUID> servicos) {
         this.servicos = servicos;
     }
 
