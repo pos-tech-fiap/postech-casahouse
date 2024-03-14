@@ -24,6 +24,11 @@ public class ItemService {
         return itemPage.map(ItemDTO::new);
     }
 
+    public ItemDTO findById(UUID id) {
+        Item item = itemRepository.findById(id).orElseThrow(() -> new RuntimeException("Item não encontrado"));
+        return new ItemDTO(item);
+    }
+
     public ItemDTO save(ItemDTO itemDTO) {
         Item item = new Item();
         mapperDtoToEntity(itemDTO, item);
