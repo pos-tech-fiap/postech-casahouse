@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -85,15 +87,19 @@ public class ReservaService {
         entity.setQuantidadePessoas(dto.getQuantidadePessoas());
         entity.setValorTotal(dto.getValorTotal());
 
+        List<Quarto> quartoList = new ArrayList<Quarto>();
         for (UUID quartoId : dto.getQuartos()) {
             Quarto quarto = quartoRepository.getOne(quartoId);
             entity.getQuartos().add(quarto.getId());
+            quartoList.add(quarto);
         }
+//        entity.setQuartos(quartoList);
 
+        List<Servico> servicoList = new ArrayList<Servico>();
         for (UUID servicoId : dto.getServicos()) {
             Servico servico = servicoRepository.getOne(servicoId);
-            entity.getServicos().add(servico);
+            servicoList.add(servico);
         }
+        entity.setServicos(servicoList);
     }
-
 }
