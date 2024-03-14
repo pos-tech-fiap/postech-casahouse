@@ -2,6 +2,7 @@ package br.com.fiap.postechcasahouse.DTO.gestaoQuartos;
 
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -10,9 +11,9 @@ public class QuartoDTO {
     private UUID id;
     @NotBlank
     private String nome;
-    @NotBlank
+    @NotNull
     private UUID predioId;
-    @NotBlank
+    @NotNull
     private UUID tipoQuartoId;
 
 
@@ -26,6 +27,7 @@ public class QuartoDTO {
     }
 
     public QuartoDTO(Quarto quarto) {
+        this.id = quarto.getId();
         this.nome = quarto.getNome();
         this.predioId = quarto.getPredioId();
         this.tipoQuartoId = quarto.getTipoQuartoId();

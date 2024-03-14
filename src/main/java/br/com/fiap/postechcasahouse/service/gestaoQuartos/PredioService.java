@@ -78,7 +78,7 @@ public class PredioService {
 
     private void mapperDtoToEntity(PredioDTO dto, Predio predio) {
         predio.setNome(dto.getNome());
-        predio.setLocalidadeID(dto.getLocalidadeId());
+        predio.setLocalidadeId(dto.getLocalidadeId());
     }
 
 

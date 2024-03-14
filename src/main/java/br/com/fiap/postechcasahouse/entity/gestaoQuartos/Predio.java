@@ -11,7 +11,7 @@ public class Predio {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
-    private UUID localidadeID;
+    private UUID localidadeId;
 
     public UUID getId() {
         return id;
@@ -29,11 +29,11 @@ public class Predio {
         this.nome = nome;
     }
 
-    public UUID getLocalidadeID() {
-        return localidadeID;
+    public UUID getLocalidadeId() {
+        return localidadeId;
     }
 
-    public void setLocalidadeID(UUID localidadeID) {
-        this.localidadeID = localidadeID;
+    public void setLocalidadeId(UUID localidadeId) {
+        this.localidadeId = localidadeId;
     }
 }

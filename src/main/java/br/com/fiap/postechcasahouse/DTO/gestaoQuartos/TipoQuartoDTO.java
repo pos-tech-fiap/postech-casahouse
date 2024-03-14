@@ -4,6 +4,7 @@ import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Descricao;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,13 +16,13 @@ public class TipoQuartoDTO {
     private UUID id;
     @NotBlank
     private String nome;
-    @NotBlank
+    @NotNull
     private Integer totCamas;
-    @NotBlank
+    @NotNull
     private Integer totPessoas;
-    @NotBlank
+    @NotNull
     private Integer totBanheiros;
-    @NotBlank
+    @NotNull
     private double valorDiaria;
     private Set<Descricao> descricao = new HashSet<>();
 
@@ -36,6 +37,7 @@ public class TipoQuartoDTO {
     }
 
     public TipoQuartoDTO(TipoQuarto tipoQuarto) {
+        this.id = tipoQuarto.getId();
         this.nome = tipoQuarto.getNome();
         this.descricao = tipoQuarto.getDescricao();
         this.totBanheiros = tipoQuarto.getTotBanheiros();
