@@ -1,6 +1,5 @@
 package br.com.fiap.postechcasahouse.entity.gestaoReservas;
 
-import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import jakarta.persistence.*;
 
@@ -31,14 +30,16 @@ public class Reserva {
             inverseJoinColumns = @JoinColumn(name = "servico_id"))
     private List<Servico> servicos;
 
-    @Transient
-    private List<String> itens;
+    @ElementCollection
+    @CollectionTable(name = "tb_reserva_item", joinColumns = @JoinColumn(name = "reserva_id"))
+    @Column(name = "item_id")
+    private List<UUID> itens;
 
     public Reserva() {
     }
 
     public Reserva(UUID id, UUID idCliente, LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer quantidadePessoas,
-                   Double valorTotal, Set<UUID> quartos, List<Servico> servicos, List<String> itens) {
+                   Double valorTotal, Set<UUID> quartos, List<Servico> servicos, List<UUID> itens) {
         this.id = id;
         this.idCliente = idCliente;
         this.dataEntrada = dataEntrada;
@@ -114,11 +115,11 @@ public class Reserva {
         this.servicos = servicos;
     }
 
-    public List<String> getItens() {
+    public List<UUID> getItens() {
         return itens;
     }
 
-    public void setItens(List<String> itens) {
+    public void setItens(List<UUID> itens) {
         this.itens = itens;
     }
 

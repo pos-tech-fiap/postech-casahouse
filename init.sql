@@ -19,9 +19,9 @@ VALUES
     ('b9fc9628-5d5d-4e17-81e5-08f36bc474b5', 'Manicure', 85.00);
 
 CREATE TABLE tb_item(
-                           id UUID primary key,
-                           nome VARCHAR(255) not null,
-                           valor double precision not null
+   id UUID primary key,
+   nome VARCHAR(255) not null,
+   valor double precision not null
 );
 
 INSERT INTO tb_item (id, nome, valor)
@@ -101,6 +101,15 @@ CREATE TABLE IF NOT EXISTS tb_reserva_servico(
 );
 
 INSERT INTO tb_reserva_servico (reserva_id, servico_id) VALUES ('6c5a64da-9b6f-431d-b4aa-b2e633a5d633', '21f3dc7c-3b24-4c97-9314-7e61a2bc8941');
+
+CREATE TABLE IF NOT EXISTS tb_reserva_item(
+    reserva_id UUID,
+    item_id UUID,
+    foreign key(reserva_id) references tb_reserva(id) on delete cascade,
+    foreign key(item_id) references tb_item(id) on delete cascade
+);
+
+INSERT INTO tb_reserva_item (reserva_id, item_id) VALUES ('6c5a64da-9b6f-431d-b4aa-b2e633a5d633', 'b9fc9628-5d5d-4e17-81e5-08f36bc474b4');
 
 --CONSTRAINT fk_quarto FOREIGN KEY (quartos) REFERENCES tb_quarto(id)
 --INSERT INTO tb_localidade (id, nome, amenidades, rua, cep, cidade, estado)

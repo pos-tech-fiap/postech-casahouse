@@ -33,20 +33,19 @@ public class ReservaDTO {
 
     private List<UUID> servicos = new ArrayList<>();
 
-    private List<String> itens = new ArrayList<>();
+    private List<UUID> itens = new ArrayList<>();
 
     public ReservaDTO() {
     }
 
     public ReservaDTO(UUID id, UUID idCliente, LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer quantidadePessoas,
-                      Double valorTotal, List<String> itens) {
+                      Double valorTotal) {
         this.id = id;
         this.idCliente = idCliente;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
         this.quantidadePessoas = quantidadePessoas;
         this.valorTotal = valorTotal;
-        this.itens = itens;
     }
 
     public ReservaDTO(Reserva reserva) {
@@ -58,10 +57,22 @@ public class ReservaDTO {
         this.valorTotal = reserva.getValorTotal();
     }
 
+    public ReservaDTO(Reserva reserva, Set<UUID> quartosIds) {
+        this(reserva);
+        this.quartos.addAll(quartosIds);
+    }
+
     public ReservaDTO(Reserva reserva, Set<UUID> quartosIds, List<UUID> servicosIds) {
         this(reserva);
         this.quartos.addAll(quartosIds);
         this.servicos.addAll(servicosIds);
+    }
+
+    public ReservaDTO(Reserva reserva, Set<UUID> quartosIds, List<UUID> servicosIds, List<UUID> itensIds) {
+        this(reserva);
+        this.quartos.addAll(quartosIds);
+        this.servicos.addAll(servicosIds);
+        this.itens.addAll(itensIds);
     }
 
     public UUID getId() {
@@ -128,11 +139,11 @@ public class ReservaDTO {
         this.servicos = servicos;
     }
 
-    public List<String> getItens() {
+    public List<UUID> getItens() {
         return itens;
     }
 
-    public void setItens(List<String> itens) {
+    public void setItens(List<UUID> itens) {
         this.itens = itens;
     }
 }
