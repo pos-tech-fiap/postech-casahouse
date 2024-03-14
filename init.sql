@@ -66,6 +66,26 @@ CREATE TABLE IF NOT EXISTS tb_quarto (
     tipo_quarto_id UUID
 );
 
+CREATE TABLE IF NOT EXISTS tb_reserva (
+    id UUID PRIMARY KEY,
+    id_cliente UUID NOT NULL,
+    data_entrada DATE NOT NULL,
+    data_saida DATE NOT NULL,
+    quantidade_pessoas INTEGER NOT NULL,
+    quartos UUID[],
+    itens TEXT[],
+    CONSTRAINT fk_quarto FOREIGN KEY (quartos) REFERENCES tb_quarto(id)
+);
+
+CREATE TABLE IF NOT EXISTS tb_reserva_servico(
+    reserva_id UUID not null,
+    servico_id UUID not null,
+    primary key(reserva_id, servico_id),
+    foreign key(reserva_id) references tb_reserva(id) on delete cascade,
+    foreign key(servico_id) references tb_servico(id) on delete cascade
+);
+
+--CONSTRAINT fk_quarto FOREIGN KEY (quartos) REFERENCES tb_quarto(id)
 --INSERT INTO tb_localidade (id, nome, amenidades, rua, cep, cidade, estado)
 --VALUES
 --    ('21f3dc7c-3b24-4c97-9314-7e61a2bc8944', 'Localidade 1', '{"PISCINA_ADULTO_AQUECIDA_COBERTA", "RESTAURANTE_A_LA_CARTE"}', 'Rua A', '12345-678', 'Cidade A', 'Estado A'),

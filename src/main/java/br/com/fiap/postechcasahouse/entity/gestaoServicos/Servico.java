@@ -1,5 +1,10 @@
 package br.com.fiap.postechcasahouse.entity.gestaoServicos;
 
+import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -15,6 +20,9 @@ public class Servico {
     private String nome;
 
     private Double valor;
+
+    @ManyToMany(mappedBy = "servicos")
+    private Set<Reserva> reservas = new HashSet<>();
 
     public UUID getId() {
         return id;
