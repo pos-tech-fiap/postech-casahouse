@@ -1,4 +1,4 @@
-package br.com.fiap.postechcasahouse.controller.gestaoQuartos.gestaoServicos;
+package br.com.fiap.postechcasahouse.controller.gestaoServicos;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ItemDTO;
 import br.com.fiap.postechcasahouse.service.gestaoServicos.ItemService;
@@ -29,6 +29,11 @@ public class ItemController {
         return ResponseEntity.ok().body(itemDTOPage);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ItemDTO> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(itemService.findById(id));
+    }
+
     @PostMapping
     public ResponseEntity<ItemDTO> save(@RequestBody @Valid ItemDTO itemDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.save(itemDTO));
@@ -42,6 +47,6 @@ public class ItemController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         itemService.delete(id);
-        return ResponseEntity.ok().body("Serviço removido com sucesso!");
+        return ResponseEntity.ok().body("Item removido com sucesso!");
     }
 }

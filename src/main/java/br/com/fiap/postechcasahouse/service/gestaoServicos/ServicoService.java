@@ -24,6 +24,11 @@ public class ServicoService {
         return servicoPage.map(ServicoDTO::new);
     }
 
+    public ServicoDTO findById(UUID id) {
+        Servico servico = servicoRepository.findById(id).orElseThrow(() -> new RuntimeException("Serviço não encontrado"));
+        return new ServicoDTO(servico);
+    }
+
     public ServicoDTO save(ServicoDTO servicoDTO) {
         Servico servico = new Servico();
         mapperDtoToEntity(servicoDTO, servico);
