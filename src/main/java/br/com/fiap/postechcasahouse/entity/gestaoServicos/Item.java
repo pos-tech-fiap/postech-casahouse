@@ -1,15 +1,12 @@
 package br.com.fiap.postechcasahouse.entity.gestaoServicos;
 
-import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_servico")
-public class Servico {
+@Table(name = "tb_item")
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,9 +15,6 @@ public class Servico {
     private String nome;
 
     private Double valor;
-
-    @ManyToMany(mappedBy = "servicos")
-    private Set<Reserva> reservas = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -44,13 +38,5 @@ public class Servico {
 
     public void setValor(Double valor) {
         this.valor = valor;
-    }
-
-    public Set<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(Set<Reserva> reservas) {
-        this.reservas = reservas;
     }
 }
