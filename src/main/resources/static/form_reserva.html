@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel CasaHouse - Formulário de Reserva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Reserve sua estadia</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <form action="#" method="post" class="reservation-form" id="reservaForm">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="checkin">Data de Entrada:</label>
+        <input type="date" id="checkin" name="checkin" required>
+        <label for="checkout">Data de Saída:</label>
+        <input type="date" id="checkout" name="checkout" required>
+        <!-- Outros campos do formulário de acordo com as especificações -->
+        <button type="submit" class="btn" id="btnConfirmar">Confirmar Reserva</button>
+    </form>
+</main>
+<footer>
+    <p>&copy; 2024 Hotel CasaHouse. Todos os direitos reservados.</p>
+</footer>
+
+<!-- Script JavaScript -->
+<script src="script.js"></script>
+<script>
+    // Adicionando um evento de clique ao botão de confirmação
+    document.getElementById('btnConfirmar').addEventListener('click', function() {
+        // Redirecionar para a página de confirmação
+        window.location.href = 'confirmacao.html';
+    });
+</script>
+</body>
+</html>

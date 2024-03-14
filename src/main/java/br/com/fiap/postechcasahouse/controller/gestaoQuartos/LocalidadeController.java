@@ -3,6 +3,7 @@ package br.com.fiap.postechcasahouse.controller.gestaoQuartos;
 import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.LocalidadeDTO;
 import br.com.fiap.postechcasahouse.service.gestaoQuartos.LocalidadeService;
 import jakarta.validation.Valid;
+import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,17 +30,15 @@ public class LocalidadeController {
         return ResponseEntity.ok().body(localidadeService.findAll(pageRequest));
     }
 
-//    @GetMapping(value = "/find")
-//    public ResponseEntity<List<LocalidadeDTO>> find(String cep, String rua, String cidade, String estado) {
-//        List<LocalidadeDTO> addresses = localidadeService.find(cep, rua, cidade, estado);
-//        return ResponseEntity.ok(addresses);
-//    }
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<LocalidadeDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(localidadeService.findById(id));
     }
-
+    @PostMapping("/oi")
+    public ResponseEntity<String> save(@RequestBody Any request) {
+        System.out.println( request);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Reserva realizada com sucesso para " + request + "!");
+    }
     @PostMapping
     public ResponseEntity<LocalidadeDTO> save(@RequestBody @Valid LocalidadeDTO localidadeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(localidadeService.save(localidadeDTO));
