@@ -48,6 +48,14 @@ public class ReservaDTO {
         this.valorTotal = valorTotal;
     }
 
+    public ReservaDTO(UUID idCliente, LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer quantidadePessoas, Double valorTotal) {
+        this.idCliente = idCliente;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+        this.quantidadePessoas = quantidadePessoas;
+        this.valorTotal = valorTotal;
+    }
+
     public ReservaDTO(Reserva reserva) {
         this.id = reserva.getId();
         this.idCliente = reserva.getIdCliente();
