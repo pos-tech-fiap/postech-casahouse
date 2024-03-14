@@ -1,7 +1,6 @@
 package br.com.fiap.postechcasahouse.controller.gestaoServicos;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoServicos.ItemDTO;
-import br.com.fiap.postechcasahouse.controller.gestaoQuartos.gestaoServicos.ItemController;
 import br.com.fiap.postechcasahouse.service.gestaoServicos.ItemService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
