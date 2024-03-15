@@ -1,8 +1,11 @@
 package br.com.fiap.postechcasahouse.controller.gestaoReservas;
 
+import br.com.fiap.postechcasahouse.DTO.gestaoReservas.EmailDTO;
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
+import br.com.fiap.postechcasahouse.service.email.EmailService;
 import br.com.fiap.postechcasahouse.service.gestaoReservas.ReservaService;
 import jakarta.validation.Valid;
+import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +21,9 @@ public class ReservaController {
 
     @Autowired
     private ReservaService reservaService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public ResponseEntity<Page<ReservaDTO>> findAll(
@@ -56,5 +62,10 @@ public class ReservaController {
         reservaService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Reserva removida com sucesso!");
+    }
+    @PostMapping("/email")
+    public ResponseEntity<String> save(@RequestBody EmailDTO emailDTO) {
+        emailService.sendSimpleMessage(emailDTO.getPara(),emailDTO.getAssunto(),emailDTO.getTexto());
+        return ResponseEntity.status(HttpStatus.CREATED).body("E-mail enviado com sucesso!");
     }
 }
