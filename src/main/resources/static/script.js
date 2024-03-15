@@ -38,12 +38,10 @@ document.getElementById('reservaForm').addEventListener('submit', function(event
     })
     .then(response => response.json())
     .then(data => {
-        // Redirecionar para a página de confirmação após a conclusão da reserva
         window.location.href = 'confirmacao.html';
     })
     .catch(error => {
         console.error('Erro:', error);
-        // Lidar com erros de requisição aqui, se necessário
     });
 });
 
