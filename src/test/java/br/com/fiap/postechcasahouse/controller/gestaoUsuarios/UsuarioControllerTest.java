@@ -54,7 +54,7 @@ public class UsuarioControllerTest {
                 "123.456.789-00", // Exemplo de CPF
                 "Origem do Usuário",
                 "Número do Passaporte",
-                LocalDateTime.of(1990, 1, 1, 0, 0), // Exemplo de data de nascimento
+                LocalDateTime.of(1990, 1, 1, 0, 0),
                 "Endereço do Usuário",
                 "Telefone do Usuário",
                 "email@example.com"

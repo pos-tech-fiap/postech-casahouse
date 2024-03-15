@@ -19,6 +19,20 @@ public class Usuario {
     private String endereco;
     private String telefone;
     private String email;
+    public Usuario() {
+
+    }
+    public Usuario(UUID id, String nome, String CPF, String origem, String passaporte, LocalDateTime dataNascimento, String endereco, String telefone, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.CPF = CPF;
+        this.origem = origem;
+        this.passaporte = passaporte;
+        this.dataNascimento = dataNascimento;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+    }
 
     public String getOrigem() {
         return origem;
