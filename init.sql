@@ -57,7 +57,6 @@ CREATE TABLE tb_localidade (
 CREATE TABLE IF NOT EXISTS tb_tipo_quarto (
     id UUID PRIMARY KEY,
     nome VARCHAR(255),
-    rua INT,
     tot_camas INT,
     tot_pessoas INT,
     tot_banheiros INT,
