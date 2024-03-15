@@ -27,6 +27,14 @@ public class ItemDTO {
         this.valor = valor;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
