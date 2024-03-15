@@ -3,9 +3,10 @@ package br.com.fiap.postechcasahouse.controller.gestaoReservas;
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.EmailDTO;
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
 import br.com.fiap.postechcasahouse.service.email.EmailService;
+import br.com.fiap.postechcasahouse.service.gestaoQuartos.QuartoService;
 import br.com.fiap.postechcasahouse.service.gestaoReservas.ReservaService;
+import br.com.fiap.postechcasahouse.service.gestaoUsuarios.UsuarioService;
 import jakarta.validation.Valid;
-import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,10 @@ public class ReservaController {
 
     @Autowired
     private ReservaService reservaService;
+    @Autowired
+    private UsuarioService usuarioService;
+    @Autowired
+    private QuartoService quartoService;
 
     @Autowired
     private EmailService emailService;
@@ -67,5 +72,17 @@ public class ReservaController {
     public ResponseEntity<String> save(@RequestBody EmailDTO emailDTO) {
         emailService.sendSimpleMessage(emailDTO.getPara(),emailDTO.getAssunto(),emailDTO.getTexto());
         return ResponseEntity.status(HttpStatus.CREATED).body("E-mail enviado com sucesso!");
+    }
+    @PostMapping("/usuario/{id}")
+    public ResponseEntity saveWithId(@PathVariable UUID id, @RequestBody @Valid ReservaDTO reservaDTO) {
+        var usuario = usuarioService.findById(id);
+        if(usuario != null){
+            return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.save(reservaDTO));
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("É necessario se cadastrar antes de criar uma reserva!");
+    }
+    @GetMapping("/busca-quartos-disponiveis")
+    public ResponseEntity findAvailableRoom() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(quartoService.findAvailableRoom());
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -81,6 +82,9 @@ public class QuartoService {
         quarto.setNome(dto.getNome());
         quarto.setPredioId(dto.getPredioId());
         quarto.setTipoQuartoId(dto.getTipoQuartoId());
+    }
+    public List<Quarto> findAvailableRoom() {
+        return quartoRepository.findAvailableRooms();
     }
 
 }
