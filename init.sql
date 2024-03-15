@@ -4,6 +4,18 @@
 -- Conectar ao database
 \c casahouse;
 
+CREATE TABLE tb_usuario (
+    id UUID PRIMARY KEY,
+    nome VARCHAR(255),
+    cpf VARCHAR(14),
+    origem VARCHAR(255),
+    passaporte VARCHAR(20),
+    data_nascimento DATE,
+    endereco VARCHAR(255),
+    telefone VARCHAR(20),
+    email VARCHAR(255)
+);
+
 CREATE TABLE tb_servico(
     id UUID primary key,
     nome VARCHAR(255) not null,

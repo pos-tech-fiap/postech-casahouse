@@ -34,11 +34,6 @@ public class LocalidadeController {
     public ResponseEntity<LocalidadeDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(localidadeService.findById(id));
     }
-    @PostMapping("/oi")
-    public ResponseEntity<String> save(@RequestBody Any request) {
-        System.out.println( request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Reserva realizada com sucesso para " + request + "!");
-    }
     @PostMapping
     public ResponseEntity<LocalidadeDTO> save(@RequestBody @Valid LocalidadeDTO localidadeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(localidadeService.save(localidadeDTO));
