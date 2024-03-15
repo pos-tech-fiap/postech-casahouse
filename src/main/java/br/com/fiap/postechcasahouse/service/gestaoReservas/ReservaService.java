@@ -60,6 +60,8 @@ public class ReservaService {
     @Transactional
     public ReservaDTO save(ReservaDTO reservaDTO) {
         try {
+            validarReserva(reservaDTO);
+
             Reserva reserva = new Reserva();
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
@@ -74,6 +76,8 @@ public class ReservaService {
     @Transactional
     public ReservaDTO update(UUID id, ReservaDTO reservaDTO) {
         try {
+            validarReserva(reservaDTO);
+
             Reserva reserva = reservaRepository.getOne(id);
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
@@ -91,6 +95,32 @@ public class ReservaService {
         } catch (NoSuchElementException e) {
             throw new RuntimeException("Reserva não encontrada, id: " + id);
         }
+    }
+
+    private void validarReserva(ReservaDTO reservaDTO) {
+        if (reservaDTO.getDataEntrada().isAfter(reservaDTO.getDataSaida())) {
+            throw new RuntimeException("Data de entrada não pode ser maior que a data de saída");
+        }
+
+        if (reservaDTO.getQuartos().isEmpty()) {
+            throw new RuntimeException("Deve ser informado ao menos um quarto");
+        }
+
+        if (reservaDTO.getQuantidadePessoas() <= 0) {
+            throw new RuntimeException("Quantidade de pessoas deve ser maior que zero");
+        }
+
+//        List<Quarto> quartos = quartoRepository.findAllById(reservaDTO.getQuartos());
+//        if (quartos.stream().mapToInt(Quarto::getCapacidade).sum() < reservaDTO.getQuantidadePessoas()) {
+//            throw new RuntimeException("Quantidade de pessoas maior que a capacidade dos quartos");
+//        }
+
+        // buscar reservas que estão no mesmo período e no mesmo quarto
+        reservaRepository.findByQuartosInAndDataEntradaLessThanEqualAndDataSaidaGreaterThanEqual(
+                reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
+                .ifPresent(reserva -> {
+                    throw new RuntimeException("Quarto já reservado para o período informado");
+                });
     }
 
     private void mapperDtoToEntity(ReservaDTO dto, Reserva entity) {
