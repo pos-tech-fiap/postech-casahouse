@@ -1,6 +1,5 @@
 package br.com.fiap.postechcasahouse.entity.gestaoQuartos;
 
-import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import jakarta.persistence.*;
 
 import java.util.UUID;

@@ -12,7 +12,6 @@ public class TipoQuarto {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
-    private Integer rua;
     private Integer totCamas;
     private Integer totPessoas;
     private Integer totBanheiros;
@@ -52,14 +51,6 @@ public class TipoQuarto {
         this.nome = nome;
     }
 
-    public Integer getRua() {
-        return rua;
-    }
-
-    public void setRua(Integer rua) {
-        this.rua = rua;
-    }
-
     public Integer getTotCamas() {
         return totCamas;
     }
@@ -76,11 +67,11 @@ public class TipoQuarto {
         this.totPessoas = totPessoas;
     }
 
-    public  Set<Descricao> getDescricao() {
+    public Set<Descricao> getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(Set<Descricao>  descricao) {
+    public void setDescricao(Set<Descricao> descricao) {
         this.descricao = descricao;
     }
 }

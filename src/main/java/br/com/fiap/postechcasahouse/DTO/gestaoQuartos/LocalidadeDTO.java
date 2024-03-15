@@ -1,14 +1,17 @@
 package br.com.fiap.postechcasahouse.DTO.gestaoQuartos;
 
-import java.util.*;
-
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Localidade;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 
 public class LocalidadeDTO {
-    private UUID id;
+    private final UUID id;
     @NotBlank
     private String nome;
     private Set<Amenidades> amenidades = new HashSet<>();

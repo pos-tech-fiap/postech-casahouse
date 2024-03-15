@@ -3,7 +3,6 @@ package br.com.fiap.postechcasahouse.service.gestaoReservas;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
-import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Item;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
@@ -123,7 +122,7 @@ public class ReservaService {
 //        }
 
         reservaRepository.findByQuartosInAndDataEntradaLessThanEqualAndDataSaidaGreaterThanEqual(
-                reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
+                        reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
                 .ifPresent(reserva -> {
                     throw new RuntimeException("Quarto já reservado para o período informado");
                 });

@@ -28,6 +28,7 @@ public class PredioDTO {
         this.localidadeId = predio.getLocalidadeId();
 
     }
+
     public UUID getId() {
         return id;
     }
