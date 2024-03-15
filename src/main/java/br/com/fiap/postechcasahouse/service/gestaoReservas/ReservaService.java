@@ -3,10 +3,12 @@ package br.com.fiap.postechcasahouse.service.gestaoReservas;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
+import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Item;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import br.com.fiap.postechcasahouse.repository.gestaoQuartos.IQuartoRepository;
+import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ITipoQuartoRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoReservas.IReservaRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoServicos.ItemRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoServicos.ServicoRepository;
@@ -37,6 +39,9 @@ public class ReservaService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private ITipoQuartoRepository tipoQuartoRepository;
+
     @Transactional(readOnly = true)
     public Page<ReservaDTO> findAll(PageRequest pageRequest) {
         Page<Reserva> reservas = reservaRepository.findAll(pageRequest);
@@ -60,6 +65,8 @@ public class ReservaService {
     @Transactional
     public ReservaDTO save(ReservaDTO reservaDTO) {
         try {
+            validarReserva(reservaDTO);
+
             Reserva reserva = new Reserva();
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
@@ -74,6 +81,8 @@ public class ReservaService {
     @Transactional
     public ReservaDTO update(UUID id, ReservaDTO reservaDTO) {
         try {
+            validarReserva(reservaDTO);
+
             Reserva reserva = reservaRepository.getOne(id);
             mapperDtoToEntity(reservaDTO, reserva);
             var reservaSaved = reservaRepository.save(reserva);
@@ -91,6 +100,33 @@ public class ReservaService {
         } catch (NoSuchElementException e) {
             throw new RuntimeException("Reserva não encontrada, id: " + id);
         }
+    }
+
+    private void validarReserva(ReservaDTO reservaDTO) {
+        if (reservaDTO.getDataEntrada().isAfter(reservaDTO.getDataSaida())) {
+            throw new RuntimeException("Data de entrada não pode ser maior que a data de saída");
+        }
+
+        if (reservaDTO.getQuartos().isEmpty()) {
+            throw new RuntimeException("Deve ser informado ao menos um quarto");
+        }
+
+        if (reservaDTO.getQuantidadePessoas() <= 0) {
+            throw new RuntimeException("Quantidade de pessoas deve ser maior que zero");
+        }
+
+//        List<Quarto> quartos = quartoRepository.findAllById(reservaDTO.getQuartos());
+//        List<UUID> tipoQuartoIdList = quartos.stream().map(Quarto::getTipoQuartoId).collect(Collectors.toList());
+//        List<TipoQuarto> tipoQuartos = tipoQuartoRepository.findAllById(tipoQuartoIdList);
+//        if (tipoQuartos.stream().mapToInt(TipoQuarto::getTotPessoas).sum() <= reservaDTO.getQuantidadePessoas()) {
+//            throw new RuntimeException("Quantidade de pessoas maior que a capacidade dos quartos");
+//        }
+
+        reservaRepository.findByQuartosInAndDataEntradaLessThanEqualAndDataSaidaGreaterThanEqual(
+                reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
+                .ifPresent(reserva -> {
+                    throw new RuntimeException("Quarto já reservado para o período informado");
+                });
     }
 
     private void mapperDtoToEntity(ReservaDTO dto, Reserva entity) {
