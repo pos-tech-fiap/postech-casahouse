@@ -3,6 +3,7 @@ package br.com.fiap.postechcasahouse.service.gestaoReservas;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
+import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Item;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
@@ -114,12 +115,12 @@ public class ReservaService {
             throw new RuntimeException("Quantidade de pessoas deve ser maior que zero");
         }
 
-//        List<Quarto> quartos = quartoRepository.findAllById(reservaDTO.getQuartos());
-//        List<UUID> tipoQuartoIdList = quartos.stream().map(Quarto::getTipoQuartoId).collect(Collectors.toList());
-//        List<TipoQuarto> tipoQuartos = tipoQuartoRepository.findAllById(tipoQuartoIdList);
-//        if (tipoQuartos.stream().mapToInt(TipoQuarto::getTotPessoas).sum() <= reservaDTO.getQuantidadePessoas()) {
-//            throw new RuntimeException("Quantidade de pessoas maior que a capacidade dos quartos");
-//        }
+        List<Quarto> quartos = quartoRepository.findAllById(reservaDTO.getQuartos());
+        List<UUID> tipoQuartoIdList = quartos.stream().map(Quarto::getTipoQuartoId).collect(Collectors.toList());
+        List<TipoQuarto> tipoQuartos = tipoQuartoRepository.findAllById(tipoQuartoIdList);
+        if (tipoQuartos.stream().mapToInt(TipoQuarto::getTotPessoas).sum() <= reservaDTO.getQuantidadePessoas()) {
+            throw new RuntimeException("Quantidade de pessoas maior que a capacidade dos quartos");
+        }
 
         reservaRepository.findByQuartosInAndDataEntradaLessThanEqualAndDataSaidaGreaterThanEqual(
                         reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
