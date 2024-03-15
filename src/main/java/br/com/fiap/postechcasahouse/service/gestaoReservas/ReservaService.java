@@ -3,10 +3,12 @@ package br.com.fiap.postechcasahouse.service.gestaoReservas;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoReservas.ReservaDTO;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Quarto;
+import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import br.com.fiap.postechcasahouse.entity.gestaoReservas.Reserva;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Item;
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import br.com.fiap.postechcasahouse.repository.gestaoQuartos.IQuartoRepository;
+import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ITipoQuartoRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoReservas.IReservaRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoServicos.ItemRepository;
 import br.com.fiap.postechcasahouse.repository.gestaoServicos.ServicoRepository;
@@ -36,6 +38,9 @@ public class ReservaService {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private ITipoQuartoRepository tipoQuartoRepository;
 
     @Transactional(readOnly = true)
     public Page<ReservaDTO> findAll(PageRequest pageRequest) {
@@ -111,11 +116,12 @@ public class ReservaService {
         }
 
 //        List<Quarto> quartos = quartoRepository.findAllById(reservaDTO.getQuartos());
-//        if (quartos.stream().mapToInt(Quarto::getCapacidade).sum() < reservaDTO.getQuantidadePessoas()) {
+//        List<UUID> tipoQuartoIdList = quartos.stream().map(Quarto::getTipoQuartoId).collect(Collectors.toList());
+//        List<TipoQuarto> tipoQuartos = tipoQuartoRepository.findAllById(tipoQuartoIdList);
+//        if (tipoQuartos.stream().mapToInt(TipoQuarto::getTotPessoas).sum() <= reservaDTO.getQuantidadePessoas()) {
 //            throw new RuntimeException("Quantidade de pessoas maior que a capacidade dos quartos");
 //        }
 
-        // buscar reservas que estão no mesmo período e no mesmo quarto
         reservaRepository.findByQuartosInAndDataEntradaLessThanEqualAndDataSaidaGreaterThanEqual(
                 reservaDTO.getQuartos(), reservaDTO.getDataSaida(), reservaDTO.getDataEntrada())
                 .ifPresent(reserva -> {
