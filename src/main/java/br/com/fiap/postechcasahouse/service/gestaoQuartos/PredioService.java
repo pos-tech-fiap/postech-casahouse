@@ -11,14 +11,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 public class PredioService {
+    private final Logger logger = LoggerFactory.getLogger(PredioService.class);
     @Autowired
     private IPredioRepository predioRepository;
-    private final Logger logger = LoggerFactory.getLogger(PredioService.class);
-
 
     @Transactional(readOnly = true)
     public Page<PredioDTO> findAll(PageRequest pageRequest) {
@@ -26,7 +26,7 @@ public class PredioService {
             Page<Predio> predio = predioRepository.findAll(pageRequest);
             logger.info("Predios encontradas: {}", predio.getTotalElements());
             return predio.map(PredioDTO::new);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             logger.error("Falha ao buscar Predios : {}", e);
             throw new RuntimeException(e);
         }
@@ -34,9 +34,9 @@ public class PredioService {
 
     @Transactional(readOnly = true)
     public PredioDTO findById(UUID id) {
-            var predios = predioRepository.findById(id).orElseThrow(() -> new RuntimeException("Predio não encontrado"));
-            logger.info("Predios encontrados: {}", predios);
-            return new PredioDTO(predios);
+        var predios = predioRepository.findById(id).orElseThrow(() -> new RuntimeException("Predio não encontrado"));
+        logger.info("Predios encontrados: {}", predios);
+        return new PredioDTO(predios);
     }
 
     @Transactional
@@ -71,7 +71,7 @@ public class PredioService {
             logger.info("Predio removido com sucesso: {}");
 
         } catch (NoSuchElementException e) {
-            logger.error("Falha ao  remover Predios: {}",e);
+            logger.error("Falha ao  remover Predios: {}", e);
             throw new RuntimeException("Predio não encontrado, id: " + id);
         }
     }

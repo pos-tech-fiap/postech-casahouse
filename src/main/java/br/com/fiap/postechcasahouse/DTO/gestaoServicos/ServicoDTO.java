@@ -1,20 +1,18 @@
 package br.com.fiap.postechcasahouse.DTO.gestaoServicos;
 
-import java.util.UUID;
-
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.UUID;
 
 
 public class ServicoDTO {
 
-    private UUID id;
-
     @NotBlank
     private final String nome;
-
     @NotBlank
     private final Double valor;
+    private UUID id;
 
     public ServicoDTO(Servico servico) {
         this.id = servico.getId();

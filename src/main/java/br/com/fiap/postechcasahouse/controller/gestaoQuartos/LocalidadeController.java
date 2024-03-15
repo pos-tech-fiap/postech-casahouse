@@ -3,7 +3,6 @@ package br.com.fiap.postechcasahouse.controller.gestaoQuartos;
 import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.LocalidadeDTO;
 import br.com.fiap.postechcasahouse.service.gestaoQuartos.LocalidadeService;
 import jakarta.validation.Valid;
-import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,6 +32,7 @@ public class LocalidadeController {
     public ResponseEntity<LocalidadeDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(localidadeService.findById(id));
     }
+
     @PostMapping
     public ResponseEntity<LocalidadeDTO> save(@RequestBody @Valid LocalidadeDTO localidadeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(localidadeService.save(localidadeDTO));

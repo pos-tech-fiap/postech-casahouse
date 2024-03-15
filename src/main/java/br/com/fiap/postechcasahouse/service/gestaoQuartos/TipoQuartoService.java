@@ -1,7 +1,6 @@
 package br.com.fiap.postechcasahouse.service.gestaoQuartos;
 
 import br.com.fiap.postechcasahouse.DTO.gestaoQuartos.TipoQuartoDTO;
-import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Descricao;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import br.com.fiap.postechcasahouse.repository.gestaoQuartos.ITipoQuartoRepository;
@@ -17,10 +16,9 @@ import java.util.*;
 
 @Service
 public class TipoQuartoService {
+    private final Logger logger = LoggerFactory.getLogger(TipoQuartoService.class);
     @Autowired
     private ITipoQuartoRepository tipoQuartoRepository;
-    private final Logger logger = LoggerFactory.getLogger(TipoQuartoService.class);
-
 
     @Transactional(readOnly = true)
     public Page<TipoQuartoDTO> findAll(PageRequest pageRequest) {
@@ -86,6 +84,7 @@ public class TipoQuartoService {
         tipoQuarto.setTotPessoas(dto.getTotPessoas());
         tipoQuarto.setvalorDiaria(dto.getValorDiaria());
     }
+
     private Set<Descricao> gerarDescricaoAleatorias() {
         Set<Descricao> descricao = new HashSet<>();
         Descricao[] todasDescricao = Descricao.values();

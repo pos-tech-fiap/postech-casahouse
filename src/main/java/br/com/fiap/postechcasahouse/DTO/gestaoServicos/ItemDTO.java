@@ -1,7 +1,6 @@
 package br.com.fiap.postechcasahouse.DTO.gestaoServicos;
 
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Item;
-
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.UUID;
@@ -11,10 +10,10 @@ public class ItemDTO {
     private UUID id;
 
     @NotBlank
-    private String nome;
+    private final String nome;
 
     @NotBlank
-    private Double valor;
+    private final Double valor;
 
     public ItemDTO(Item item) {
         this.id = item.getId();

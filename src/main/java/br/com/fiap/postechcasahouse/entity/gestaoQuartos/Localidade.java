@@ -38,12 +38,13 @@ public class Localidade {
     public String getRua() {
         return rua;
     }
-    public UUID getId() {
-        return id;
-    }
 
     public void setRua(String rua) {
         this.rua = rua;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getCep() {

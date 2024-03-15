@@ -16,10 +16,9 @@ import java.util.*;
 
 @Service
 public class LocalidadeService {
+    private final Logger logger = LoggerFactory.getLogger(LocalidadeService.class);
     @Autowired
     private ILocalidadeRepository localidadeRepository;
-    private final Logger logger = LoggerFactory.getLogger(LocalidadeService.class);
-
 
     @Transactional(readOnly = true)
     public Page<LocalidadeDTO> findAll(PageRequest pageRequest) {
@@ -27,7 +26,7 @@ public class LocalidadeService {
             Page<Localidade> localidades = localidadeRepository.findAll(pageRequest);
             logger.info("Localidades encontradas: {}", localidades.getTotalElements());
             return localidades.map(LocalidadeDTO::new);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             logger.error("Falha ao buscar localidades : {}", e);
             throw new RuntimeException(e);
         }
@@ -35,9 +34,9 @@ public class LocalidadeService {
 
     @Transactional(readOnly = true)
     public LocalidadeDTO findById(UUID id) {
-            var localidades = localidadeRepository.findById(id).orElseThrow(() -> new RuntimeException("Localidade não encontrada"));
-            logger.info("Localidades encontradas: {}", localidades);
-            return new LocalidadeDTO(localidades);
+        var localidades = localidadeRepository.findById(id).orElseThrow(() -> new RuntimeException("Localidade não encontrada"));
+        logger.info("Localidades encontradas: {}", localidades);
+        return new LocalidadeDTO(localidades);
     }
 
     @Transactional
@@ -72,7 +71,7 @@ public class LocalidadeService {
             logger.info("Localidades removida com sucesso: {}");
 
         } catch (NoSuchElementException e) {
-            logger.error("Falha ao  remover localidades: {}",e);
+            logger.error("Falha ao  remover localidades: {}", e);
             throw new RuntimeException("Localidade não encontrada, id: " + id);
         }
     }

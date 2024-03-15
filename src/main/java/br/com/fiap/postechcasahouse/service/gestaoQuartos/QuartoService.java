@@ -17,10 +17,9 @@ import java.util.UUID;
 
 @Service
 public class QuartoService {
+    private final Logger logger = LoggerFactory.getLogger(QuartoService.class);
     @Autowired
     private IQuartoRepository quartoRepository;
-    private final Logger logger = LoggerFactory.getLogger(QuartoService.class);
-
 
     @Transactional(readOnly = true)
     public Page<QuartoDTO> findAll(PageRequest pageRequest) {
@@ -83,6 +82,7 @@ public class QuartoService {
         quarto.setPredioId(dto.getPredioId());
         quarto.setTipoQuartoId(dto.getTipoQuartoId());
     }
+
     public List<Quarto> findAvailableRoom() {
         return quartoRepository.findAvailableRooms();
     }

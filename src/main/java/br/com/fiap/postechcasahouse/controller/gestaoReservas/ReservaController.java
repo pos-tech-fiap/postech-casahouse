@@ -68,19 +68,22 @@ public class ReservaController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Reserva removida com sucesso!");
     }
+
     @PostMapping("/email")
     public ResponseEntity<String> save(@RequestBody EmailDTO emailDTO) {
-        emailService.sendSimpleMessage(emailDTO.getPara(),emailDTO.getAssunto(),emailDTO.getTexto());
+        emailService.sendSimpleMessage(emailDTO.getPara(), emailDTO.getAssunto(), emailDTO.getTexto());
         return ResponseEntity.status(HttpStatus.CREATED).body("E-mail enviado com sucesso!");
     }
+
     @PostMapping("/usuario/{id}")
     public ResponseEntity saveWithId(@PathVariable UUID id, @RequestBody @Valid ReservaDTO reservaDTO) {
         var usuario = usuarioService.findById(id);
-        if(usuario != null){
+        if (usuario != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.save(reservaDTO));
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("É necessario se cadastrar antes de criar uma reserva!");
     }
+
     @GetMapping("/busca-quartos-disponiveis")
     public ResponseEntity findAvailableRoom() {
         return ResponseEntity.status(HttpStatus.CREATED).body(quartoService.findAvailableRoom());

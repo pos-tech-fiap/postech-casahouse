@@ -17,7 +17,6 @@ public class QuartoDTO {
     private UUID tipoQuartoId;
 
 
-
     public QuartoDTO(UUID id, String nome, UUID predioId, UUID tipoQuartoId) {
         this.id = id;
         this.nome = nome;

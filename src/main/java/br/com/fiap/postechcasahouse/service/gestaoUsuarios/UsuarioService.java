@@ -16,10 +16,9 @@ import java.util.UUID;
 
 @Service
 public class UsuarioService {
+    private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
     @Autowired
     private IUsuarioRepository usuarioRepository;
-    private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
-
 
     @Transactional(readOnly = true)
     public Page<UsuarioDTO> findAll(PageRequest pageRequest) {

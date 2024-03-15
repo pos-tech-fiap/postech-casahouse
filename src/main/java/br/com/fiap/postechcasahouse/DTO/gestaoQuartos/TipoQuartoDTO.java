@@ -1,6 +1,5 @@
 package br.com.fiap.postechcasahouse.DTO.gestaoQuartos;
 
-import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Amenidades;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.Descricao;
 import br.com.fiap.postechcasahouse.entity.gestaoQuartos.TipoQuarto;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +12,7 @@ import java.util.UUID;
 
 
 public class TipoQuartoDTO {
-    private UUID id;
+    private final UUID id;
     @NotBlank
     private String nome;
     @NotNull
@@ -46,6 +45,7 @@ public class TipoQuartoDTO {
         this.valorDiaria = tipoQuarto.getvalorDiaria();
 
     }
+
     public Set<Descricao> getDescricao() {
         return descricao;
     }
