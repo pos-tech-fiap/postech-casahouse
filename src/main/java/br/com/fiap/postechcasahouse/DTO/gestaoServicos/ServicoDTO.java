@@ -2,6 +2,7 @@ package br.com.fiap.postechcasahouse.DTO.gestaoServicos;
 
 import br.com.fiap.postechcasahouse.entity.gestaoServicos.Servico;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public class ServicoDTO {
 
     @NotBlank
     private final String nome;
-    @NotBlank
+    @NotNull
     private final Double valor;
     private UUID id;
 
