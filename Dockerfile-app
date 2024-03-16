@@ -1,0 +1,10 @@
+FROM amazoncorretto:17-alpine3.19-jdk
+
+WORKDIR /app
+COPY target/casahouse.jar /app/casahouse.jar
+
+# Cria o diretório "data" e define suas permissões
+RUN mkdir -p /app/data && \
+    chmod -R 777 /app/data
+
+CMD ["java", "-jar", "casahouse.jar"]

@@ -1,10 +1,14 @@
-# docker build -f Dockerfile -t casahouse-local .
+# docker build -f Dockerfile-db -t casahouse-local .
 # docker run -p 5432:5432 -v $(pwd):/postech-casahouse/ casahouse-local
 FROM postgres:latest
 
 ENV POSTGRES_DB casahouse
 ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWORD postgres
+
+# Cria o diretório de dados e define suas permissões
+RUN mkdir -p /var/lib/postgresql/data && \
+    chmod -R 777 /var/lib/postgresql/data
 
 COPY init.sql /docker-entrypoint-initdb.d/
 

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    command: sh -c "mkdir -p /app/data && chmod -R 777 /app/data && java -jar casahouse.jar"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./casahouse:/app
+    networks:
+      - casahouse-network
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    command: sh -c "mkdir -p /var/lib/postgresql/data && chmod -R 777 /var/lib/postgresql/data && docker-entrypoint.sh postgres"
+    environment:
+      POSTGRES_DB: casahouse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /var/lib/postgresql/data
+    networks:
+      - casahouse-network
+
+networks:
+  casahouse-network:
+    driver: bridge
